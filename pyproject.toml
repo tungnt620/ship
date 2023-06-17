@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ship"
+version = "0.1.0"
+description = ""
+authors = ["tungnt620 <tungnt620@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.2.2"
+psycopg2-binary = "^2.9.6"
+pillow = "^9.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

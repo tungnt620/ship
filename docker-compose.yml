@@ -1,0 +1,51 @@
+version: "3.4"
+
+services:
+  db:
+    profiles:
+      - ship
+    image: library/postgres:14-alpine
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    networks:
+      - ship-backend-tier
+    volumes:
+      - ship-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ship
+      - POSTGRES_PASSWORD=ship
+
+  redis:
+    profiles:
+      - ship
+    image: library/redis:7.0-alpine
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    networks:
+      - ship-backend-tier
+    volumes:
+      - ship-redis:/data
+
+  mailpit:
+    profiles:
+      - ship
+    image: axllent/mailpit
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui. Visit http://localhost:8025/ to check emails
+    restart: unless-stopped
+    networks:
+      - ship-backend-tier
+
+volumes:
+  ship-db:
+    driver: local
+  ship-redis:
+    driver: local
+  ship-media:
+
+networks:
+  ship-backend-tier:
+    driver: bridge
